@@ -22,14 +22,6 @@ sudo apt-get install -y build-essential curl libcurl4-openssl-dev nlohmann-json3
 - [../APIgemini.h](../APIgemini.h): define a sua chave de API (`MinhaApiKeyGemini`)
 
 ## Configurar chave da API (Gemini)
-Você pode manter como no código, criando/ajustando o arquivo [../APIgemini.h](../APIgemini.h):
-
-```cpp
-#include <iostream>
-using namespace std;
-
-// Substitua pela sua chave do Google AI Studio
-string MinhaApiKeyGemini = "SEU_GEMINI_API_KEY_AQUI";
 ```
 
 Alternativa (mais segura): use variável de ambiente e leia no código. Exemplo de export:

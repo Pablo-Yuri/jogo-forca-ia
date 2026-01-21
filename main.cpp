@@ -2,9 +2,9 @@
 void Forca::exibirdesenho(string palavraEscondida[], bool desvendou) {
     system("clear");
     cout << "DICA: " << (dicas.empty() ? "Sem dica" : dicas[0]) << " | Tentativas: " << tentativasRestantes << endl;
-    cout << "Letras usadas: ";
+    cout << "Letras usadas: \033[1;31m";
     for (const auto& l : letrasUsadas) cout << l << " ";
-    cout << endl << endl;
+    cout << "\033[0m" << endl << endl;
 
     if (desvendou) {
         cout << "   ___________" << endl;
@@ -17,13 +17,13 @@ void Forca::exibirdesenho(string palavraEscondida[], bool desvendou) {
         cout << "   ___________" << endl;
         cout << "  | /        |" << endl;
         cout << "  |/       " << (tentativasRestantes <= 3 ? "(x_x)" : " ") << endl;
-        cout << "  |        " << (tentativasRestantes <= 2 ? "\\|/" : " ") << endl;
+        cout << "  |        " << (tentativasRestantes <= 2 ? " \\|/" : " ") << endl;
         cout << "  |         " << (tentativasRestantes <= 1 ? " |" : " ") << endl;
-        cout << "  |        " << (tentativasRestantes <= 0 ? "/ \\" : " ") << endl;
+        cout << "  |        " << (tentativasRestantes <= 0 ? " / \\" : " ") << endl;
     }
 
     cout << " _|___      ";
-    for (int i = 0; i < (int)palavraSecreta.length(); i++) cout << palavraEscondida[i] << " ";
+    for (int i = 0; i < (int)palavraSecreta.length(); i++) cout << "\033[1;34m" << palavraEscondida[i] << "\033[0m ";
     cout << endl << endl;
 
     if (desvendou) cout << "\033[1;32mPARABENS! Voce salvou o boneco!\033[0m" << endl;
@@ -37,14 +37,24 @@ void Forca::exibirdesenho(string palavraEscondida[], bool desvendou) {
 int main() {
     Forca jogo;
     system("clear");
-    cout << "=== CONFIGURACAO (LINUX) ===" << endl;
-    cout << "Palavra Secreta: ";
-    getline(cin, jogo.palavraSecreta);
-    limparBuffer();
-    cout << "Dica: ";
-    string d; getline(cin, d);
-    limparBuffer();
-    jogo.dicas.push_back(d);
+
+    // Painel Inicial
+    // vector<string> opcoesInicio = {"Jogar novamente", "", "Sair"};
+    
+    if (jogo.MenuInicial()){
+        // modo com IA
+        cout << "=== Modo com IA ===" << endl;
+        exit(0); // Temporariamente desabilitado
+    } else {
+        cout << "=== Modo Manual ===" << endl;
+        cout << "Palavra Secreta: ";
+        getline(cin, jogo.palavraSecreta);
+        limparBuffer();
+        cout << "Dica: ";
+        string d; getline(cin, d);
+        limparBuffer();
+        jogo.dicas.push_back(d);
+    }
     
     jogo.maiusculo(jogo.palavraSecreta);
     jogo.tentativasRestantes = 4;
@@ -70,7 +80,7 @@ int main() {
             else if (direcao == 66) selecionado = (selecionado + 1) % (int)opcoes.size(); // Baixo
         } 
         else if (tecla == 10) { // Enter no Linux
-            if (seleciona do == 0) {
+            if (selecionado == 0) {
                 cout << "Digite uma letra: ";
                 char L; cin >> L;
                 limparBuffer();
@@ -92,7 +102,12 @@ int main() {
         }
     }
 
+    // limparBuffer();
     jogo.exibirdesenho(palavraEscondida, ganhou);
+
+    // bool fim;
+    // vector<string> opcoesFim = {"Jogar novamente", "", "Sair"};
+
     cout << "\nPressione Enter para sair...";
     getch_linux();
     

@@ -6,6 +6,9 @@
 #include <termios.h>
 #include <unistd.h>
 
+#include <chrono>
+#include <thread>
+
 using namespace std;
 
 // Função para ler teclas no Linux sem esperar pelo Enter
@@ -112,17 +115,54 @@ void Forca::exibirMenu(const vector<string>& opcoes, int selecionado) {
     cout << "------------------------------" << endl;
 }
 
+string espacos(int n) {
+    return string(n, ' ');
+}
+
+void exibirArteInicioDinamica() {
+    int inicioCaminhada = 0;
+    int fimCaminhada = 5;
+    
+    for (int i = inicioCaminhada; i <= fimCaminhada; ++i) {
+        system("clear"); // Limpa a tela a cada quadro
+        cout << "=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=" << endl;
+        
+        cout << "   _________" << endl;
+        cout << "  | /       |" << endl;
+        cout << "  |/         " << endl;
+        
+        // O boneco "anda" aumentando os espaços antes dele
+        cout << "  | " << espacos(i) << "   o"   << endl;
+        cout << "  | " << espacos(i) << "  /|\\" << endl;
+        cout << "  | " << espacos(i) << "   |" << endl;
+        cout << " _|___" << espacos(i) << "/ \\" << endl;
+        // cout << " _|___" << endl;
+        cout << "\n\033[1;34m Chegando na forca...\033[0m" << endl;
+        
+        this_thread::sleep_for(chrono::milliseconds(200));
+    }
+    cout << "\n\033[1;34m Bem-vindo ao Jogo da Forca!\033[0m" << endl;
+    cout << "=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=" << endl;
+    
+    this_thread::sleep_for(chrono::seconds(1));
+}
+
+int cont = 0;
 bool Forca::MenuInicial(){
     vector<string> opcoesInicio = {"Jogar com IA", "Jogar sem IA", "Sair"};
     // bool ganhou = false;
     int selecionado = 0;
+    
+    exibirArteInicioDinamica();
+    cout << "Pressione Enter para continuar..." << endl;
+    getch_linux();
+    // cont++;
     while (true) {
-        system("clear");
-        // jogo.exibirdesenho(palavraEscondida);
+        if (cont >= 1) system("clear");
+        cont++;
         exibirMenu(opcoesInicio, selecionado);
-        
-        // cout << "tecla: " << tecla << endl;
-        // cout << "selecionado: " << selecionado << endl;
+
+        cout << "Use as setas para navegar e Enter para selecionar." << endl;
         int tecla = getch_linux();
 
         if (tecla == 27) { // Tecla de seta no Linux
@@ -134,15 +174,17 @@ bool Forca::MenuInicial(){
         else if (tecla == 10) { // Enter no Linux
             if (selecionado == 0) {
                 // Jogar com IA
-                cout << "Jogar com IA selecionado!" << endl;
-                // break;  
-                getch_linux();
+                // cout << "Jogar com IA selecionado!" << endl;
+                // cout << "Pressione Enter para continuar..." << endl;
+                // // break;  
+                // getch_linux();
                 return true; 
             } 
             else if (selecionado == 1) {
                 // Jogar sem IA
-                cout << "Jogar sem IA selecionado!" << endl;
-                getch_linux(); 
+                // cout << "Jogar sem IA selecionado!" << endl;
+                // cout << "Pressione Enter para continuar..." << endl;
+                // getch_linux(); 
                 return false;
             } 
             else if (selecionado == 2) {

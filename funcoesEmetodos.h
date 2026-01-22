@@ -194,3 +194,4 @@ bool Forca::MenuInicial(){
         }
     }
 }
+

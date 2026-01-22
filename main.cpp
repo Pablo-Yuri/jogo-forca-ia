@@ -1,4 +1,7 @@
 #include "funcoesEmetodos.h"
+#include "integracaoGemini.h"
+// g++ -std=c++17 main.cpp -o main.exe -lcurl
+
 void Forca::exibirdesenho(string palavraEscondida[] , bool desvendou) {
     system("clear");
     cout << "=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=" << endl;
@@ -42,7 +45,18 @@ int main() {
         if (jogo.MenuInicial()){
             // modo com IA
             cout << "==== Modo com IA ====" << endl;
-            exit(0); // Temporariamente desabilitado
+            RespostaIA resposta = requisicao();
+            if (resposta.ok) {
+                jogo.palavraSecreta = resposta.palavra;
+                jogo.dicas.push_back(resposta.dica);
+            } else {
+                cout << "\n❌ Falha ao obter ou parsear resposta da IA." << endl;
+                if (!resposta.raw.empty()) {
+                    cout << "Resposta bruta: " << resposta.raw << endl;
+                }
+            }
+            cout << "\nPressione Enter para continuar...";
+            getch_linux();
         } else {
             system("clear");
             cout << "==== Modo Manual ====" << endl;
@@ -96,10 +110,13 @@ int main() {
                     limparBuffer();
                     for(char &c : P) c = toupper(c);
                     ganhou = jogo.segredo(palavraEscondida, P);
-                    if (!ganhou && jogo.tentativasRestantes <= 0) break;
                     getch_linux(); 
                 } 
-                else if (selecionado == 2) break;
+                else if (selecionado == 2){ 
+                    cout << "Sair selecionado!" << endl;
+                    exit(0);
+                    break;
+                }
             }
         }
 

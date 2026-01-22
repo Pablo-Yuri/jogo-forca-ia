@@ -19,7 +19,7 @@ git clone https://github.com/Pablo-Yuri/jogo-forca-ia.git
 cd jogo-forca-ia
 
 # 2. Instale dependências (Debian/Ubuntu)
-sudo apt-get install build-essential libcurl4-openssl-dev nlohmann-json3-dev
+sudo apt-get install build-essential curl libcurl4-openssl-dev nlohmann-json3-dev
 
 # 3. Configure a API key (obtenha em https://aistudio.google.com/app/apikey)
 export GEMINI_API_KEY="sua_chave_aqui"
@@ -66,7 +66,7 @@ jogo-forca-ia/
 ├── funcoesEmetodos.h     # Classe Forca e utilitários
 ├── integracaoGemini.h    # Interface com API Gemini
 ├── Makefile              # Automação de build
-├── Realme.md             # Documentação completa
+├── Documentacao.md       # Documentação completa
 └── README.md             # Este arquivo
 ```
 
@@ -105,7 +105,7 @@ source ~/.zshrc
 
 ## 📖 Documentação Completa
 
-Veja [Realme.md](Realme.md) para:
+Veja [Documentacao.md](Documentacao.md) para:
 - Instalação detalhada
 - Configuração de variáveis de ambiente
 - Troubleshooting completo

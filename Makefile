@@ -12,31 +12,30 @@ endif
 
 # Binaries
 BIN_MAIN := main.exe
-BIN_GEMINI := integracaoGemini.exe
 
 # Sources
 SRC_MAIN := main.cpp
-SRC_GEMINI := integracaoGemini.cpp
 
 # Headers
 HDR_FORCA := funcoesEmetodos.h
-HDR_API := ../APIgemini.h
+HDR_INTEGRACAO := integracaoGemini.h
 
-.PHONY: all clean run-main run-gemini
+.PHONY: all clean run build
 
-all: $(BIN_MAIN) $(BIN_GEMINI)
+build: $(BIN_MAIN)
 
-$(BIN_MAIN): $(SRC_MAIN) $(HDR_FORCA)
-	$(CXX) $(CXXFLAGS) $(CURL_CFLAGS) $< -o $@
-
-$(BIN_GEMINI): $(SRC_GEMINI) $(HDR_API)
-	$(CXX) $(CXXFLAGS) $(CURL_CFLAGS) $< -o $@ $(CURL_LIBS)
+$(BIN_MAIN): $(SRC_MAIN) $(HDR_FORCA) $(HDR_INTEGRACAO)
+	$(CXX) $(CXXFLAGS) $(CURL_CFLAGS) $(SRC_MAIN) -o $@ $(CURL_LIBS)
 
 run-main: $(BIN_MAIN)
 	./$(BIN_MAIN)
 
-run-gemini: $(BIN_GEMINI)
-	./$(BIN_GEMINI)
+run: run-main
 
 clean:
-	rm -f $(BIN_MAIN) $(BIN_GEMINI)
+	rm -f $(BIN_MAIN) *.o
+
+
+# make build      # Compila (cria main.exe)
+# make run        # Compila e executa
+# make clean      # Remove binários
